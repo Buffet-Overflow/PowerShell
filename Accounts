@@ -1,0 +1,24 @@
+#counts user logins by username and sorts by count
+echo '
+User logins:'
+Get-WinEvent @{logname="security";id=4624} | ForEach-Object{$_.Properties[5].Value} |Group-Object -noelement | sort count -Descending | Out-File 'C:\Users\Ben C\Documents\user_logins.txt'
+
+#counts failed login attempts and sorts by count
+echo '
+Failed logins:'
+#Get-WinEvent @{logname="security";id=4625} | ForEach-Object{$_.Properties[5].Value} | Group-Object -noelement | sort count -Descending | Out-File 'C:\Users\Ben C\Documents\failed_logins.txt'
+
+#counts special privileges assigned to new logon and sorts by count
+echo '
+Special priv assigned:'
+Get-WinEvent @{logname="Security";id=4672} | ForEach-Object{$_.Properties[2].Value} | Group-Object -noelement | sort count -Descending | Out-File 'C:\Users\Ben C\Documents\spec_priv.txt'
+
+#counts user added to privilege group and sorts by count
+echo '
+User added to priv group:'
+Get-WinEvent @{logname="Security";id=4728,4732,4756,4672} | ForEach-Object{$_.Properties[2].Value} | Group-Object -noelement | sort count -Descending | Out-File 'C:\Users\Ben C\Documents\added_group.txt'
+
+#counts security-enabled local group changes and sorts by count
+echo '
+Local group changes:'
+Get-WinEvent @{logname="Security";id=4735} | ForEach-Object{$_.Properties[4].Value} | Group-Object -NoElement | sort count -Descending | Out-File 'C:\Users\Ben C\Documents\change_group.txt'
