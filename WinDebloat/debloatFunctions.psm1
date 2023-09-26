@@ -1,5 +1,5 @@
 $global:helpersExecuted = $false
-
+#Requires -RunAsAdministrator
 function Remove-App {
 # Function for removing Apps
     param(
